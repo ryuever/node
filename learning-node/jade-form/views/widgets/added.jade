@@ -1,0 +1,6 @@
+extends ../layout
+block content
+  h1 #{title} | #{widget.name}
+  include widget
+// The block is named content, so it integrates with the expectations of the block name
+// set in the layout.jade file.

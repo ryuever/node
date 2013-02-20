@@ -1,0 +1,1082 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>python-4</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="python-4"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-01-11T00:32+0900"/>
+<meta name="author" content="ryu"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style><link rel="stylesheet" href="file:///home/ryu/emacs/emacs-plugin/org.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">python-4</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Copying an object</a>
+<ul>
+<li><a href="#sec-1-1">1.1 Introduction</a></li>
+<li><a href="#sec-1-2">1.2 reference vs copies</a></li>
+<li><a href="#sec-1-3">1.3 Noted</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 Construct lists with list comprehension</a></li>
+<li><a href="#sec-3">3 Return an element of a list if it exists</a></li>
+<li><a href="#sec-4">4 Looping over Items and Their Indices in a sequence</a>
+<ul>
+<li><a href="#sec-4-1">4.1 dict VS list</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 Creating lists of lists without sharing reference</a>
+<ul>
+<li><a href="#sec-5-1">5.1 Recommended</a></li>
+<li><a href="#sec-5-2">5.2 The reason why we talking about "implicit reference"</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 flattening a nested sequence</a>
+<ul>
+<li><a href="#sec-6-1">6.1 Resolution</a></li>
+<li><a href="#sec-6-2">6.2 Summary</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7 Removing or Reordering columns in a list of row.</a></li>
+<li><a href="#sec-8">8 Transposing a list</a>
+<ul>
+<li><a href="#sec-8-1">8.1 slight improvement in performance</a></li>
+</ul>
+</li>
+<li><a href="#sec-9">9 Getting a value from dictionary</a></li>
+<li><a href="#sec-10">10 Adding an entry to an dictionary</a>
+<ul>
+<li><a href="#sec-10-1">10.1 Discussion</a></li>
+</ul>
+</li>
+<li><a href="#sec-11">11 Building a dictionary without excessive quoting</a>
+<ul>
+<li><a href="#sec-11-1">11.1 Discussion</a></li>
+<li><a href="#sec-11-2">11.2 Conclusion</a></li>
+</ul>
+</li>
+<li><a href="#sec-12">12 Building a dict from a list of alternating keys and values</a>
+<ul>
+<li><a href="#sec-12-1">12.1 dict(zip(seq,seq))</a></li>
+</ul>
+</li>
+<li><a href="#sec-13">13 Extracting a subset from a dictionary</a></li>
+<li><a href="#sec-14">14 Inverting a dictionary</a></li>
+<li><a href="#sec-15">15 Associating multiple value with each key in a dict</a></li>
+<li><a href="#sec-16">16 Using dict to dispatching method or function</a></li>
+<li><a href="#sec-17">17 Finding Unions and intersections of dict</a>
+<ul>
+<li><a href="#sec-17-1">17.1 Discussion</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Copying an object</h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Introduction</h3>
+<div class="outline-text-3" id="text-1-1">
+
+<p>Module copy in the standard Python library offers two functions to create copies. 
+</p>
+
+
+<pre class="example">import copy
+new_list = copy.copy(existing_list)
+
+new_list_of_dicts = copy.deepcopy(existing_list_of_dicts)
+</pre>
+
+<ul>
+<li>the module copy from the Python Standard Library offers two functions to make copies. Normally,
+you use copy.copy, which makes a shallow copy—it copies an object, but for each
+attribute or item of the object, it continues to share references, which is faster and
+saves memory.</li>
+<li>The difference between shallow and deep copying is only relevant for compound objects
+(objects that contain other objects, like lists or class instances):</li>
+<li>If you are about to alter an object, but you want to keep the original object unaltered, you must make a copy.</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> reference vs copies</h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+it is crucial that you learn to draw the distinction between <i>altering an object</i>
+and <i>assigning to a name</i>,These two kinds of operations have nothing to do with each other.
+<p><b>the issue of references versus copies is meaningful only when you alter some object.</b></p>
+<p>A statement such as a=[ ] rebinds name a but performs no alteration at all on the
+object that was previously bound to name a.</p>
+
+<pre class="example">In [46]: list2=[1,[2,3],'hello']
+In [49]: test=copy.copy(list2)
+
+In [50]: test[0]=7
+In [51]: print test,list2
+[7, [2, 3], 'hello'] [1, [2, 3], 'hello']
+
+In [87]: test[1].append(9)    # alter item.
+In [89]: print test,list2
+[7, [2, 3, 9], 'hello'] [1, [2, 3, 9], 'hello']
+
+In [76]: test[1]=4            # assign to a item.
+In [78]: print test, list2
+[7, 4, 'bingo'] [1, [2, 3], 'hello']
+
+In [69]: list3=list2[:]       # another way to copy a list.
+In [70]: list3
+Out[70]: [1, [2, 3], 'hello']
+</pre>
+
+
+
+<pre class="example">In [63]: d={'a':4,'b':7}
+In [64]: d2=dict(d)                # shallow copy
+
+In [65]: d2
+Out[65]: {'a': 4, 'b': 7}
+
+In [66]: d2['a']=8                 # rebind 'a'     
+
+In [67]: print d,d2
+{'a': 4, 'b': 7} {'a': 8, 'b': 7}
+
+In [71]: d2.pop('a')
+Out[71]: 8
+
+In [79]: print d,d2
+{'a': 4, 'b': 7} {'b': 7}
+</pre>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">dict</td><td class="left">dict(dict-instance),copy.copy(dict-instance)</td><td class="left">immutable</td></tr>
+<tr><td class="left">list</td><td class="left">list-instance[:],copy.copy(list-instance)</td><td class="left">immutable</td></tr>
+<tr><td class="left">own-class</td><td class="left">supply special method _<sub>copy</sub>__ or _<sub>deepcopy</sub>__</td><td class="left"></td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Noted</h3>
+<div class="outline-text-3" id="text-1-3">
+
+<p>Note that you do not need to copy immutable objects (strings, numbers, tuples, etc.)
+because you don’t have to worry about altering them.
+(is checks for identity; for checking mere equality, you use the == opera-
+tor).
+
+
+<pre class="example">In [90]: s = 'cat'
+
+In [91]: t = copy.copy(s)
+
+In [92]: t is s
+Out[92]: True
+</pre>
+
+is checks for identity; for checking mere equality, you use the == operator
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Construct lists with list comprehension</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>set all items greater than 100 to 100
+</p>
+
+
+<pre class="example">L[:] = [min(x,100) for x in L]
+</pre>
+
+<p>
+In Python 2.4, you should consider using a generator expression, rather than a list
+comprehension, when the sequence may be long and you only need one item at a
+time,The syntax of generator expressions is just the same as for list comprehensions, 
+except that generator expressions are surrounded by parentheses, ( and ), not brackets, [ and ]. 
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Return an element of a list if it exists</h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>The function in this recipe just checks whether i is a valid index by applying
+Python’s indexing rule: valid indices are negative ones down to -len(L) inclusive,
+and non-negative ones up to len(L) exclusive.the negative is for the situation we 
+got the list item from back.</p>
+Comparing below 2 approach, the first one is recommended, it is more fast, clarity and readable.
+
+<pre class="example">def list_get(L, i, v=None):
+    if -len(L) &lt;= i &lt; len(L): return L[i]
+    else: return v
+
+def list_get_egfp(L, i, v=None):
+    try: return L[i]
+    except IndexError: return v
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Looping over Items and Their Indices in a sequence</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>Python offers the built-in function enumerate, which takes any iter-
+able argument and returns an iterator yielding all the pairs (two-item tuples) of the
+form (index, item), one pair at a time. 
+</p>
+
+
+<pre class="example">for index, item in enumerate(sequence):
+    if item &gt; 23:
+        sequence[index] = transform(item)
+
+for item in sequence:   # more directly way to get the item. but index is not available.
+    process(item)
+</pre>
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> dict VS list</h3>
+<div class="outline-text-3" id="text-4-1">
+
+<p>d=dict(enumerate(L)). This gives a dictionary d that’s equivalent to list L, d[i]=L[i]
+</p>
+
+
+<pre class="example">In [93]: list2
+Out[93]: [1, [2, 3, 9], 'hello']
+
+In [94]: enumerate(list2)
+Out[94]: &lt;enumerate at 0x2e361e0&gt;
+
+In [95]: d =dict(enumerate(list2))
+
+In [96]: d
+Out[96]: {0: 1, 1: [2, 3, 9], 2: 'hello'}
+
+In [98]: print d[1],list2[1]
+[2, 3, 9] [2, 3, 9]
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Creating lists of lists without sharing reference</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>You want to create a multidimensional list but want to avoid implicit reference
+sharing.it means one item updated will not cause other change of this list..
+</p>
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Recommended</h3>
+<div class="outline-text-3" id="text-5-1">
+
+<p>We have below 2 method to create a 2X3 array. you will see if we change the item in 
+this array, it will not cause any change for other items..
+</p>
+
+
+<pre class="example">In [100]: multilist = [[0 for col in range(3)] for row in range(2)]
+In [101]: multilist
+Out[101]: [[0, 0, 0], [0, 0, 0]]
+In [102]: multilist[0][0]=4
+In [103]: multilist
+Out[103]: [[4, 0, 0], [0, 0, 0]]
+
+In [113]: multilist = [[0]*5 for row in range(3)]
+In [114]: multilist[0][0]=4
+In [115]: multilist
+Out[115]: [[4, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> The reason why we talking about "implicit reference"</h3>
+<div class="outline-text-3" id="text-5-2">
+
+<p>Because As a beginner we always be confused, we could get an array of 5 zeros through below method.
+</p>
+
+
+<pre class="example">In [104]: alist = [0] * 5   # get an array of 5 zeros.
+
+In [105]: alist
+Out[105]: [0, 0, 0, 0, 0]
+</pre>
+
+<p>
+So when we want to got a multi-dimension. it will be a nature progression like below.To understand the issue, it
+helps to decompose the creation of the multidimensional list into two steps:
+</p>
+
+
+<pre class="example">In [142]: row = [0]*5       # a list with 5 reference to 0
+
+In [143]: multi =[row]*3    # a list with 3 reference to the row object.
+
+In [144]: multi             # at first sight, it is exactly the format of 2 dimension array. but it have below issue.
+Out[144]: [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+
+# because multi is compose of 3 reference to a same row object. so if you assign a value to multi[0][0], indeed row[0]
+# is updated, so multi[1] &amp; multi[2] is also update accordingly, because they share same object.
+In [106]: multi = [[0] * 5] * 3
+
+In [107]: multi             # we get a second dimension. but the three item refer to same object.
+Out[107]: [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+
+In [108]: multi[0][0]='op'
+
+In [109]: multi
+Out[109]: [['op', 0, 0, 0, 0], ['op', 0, 0, 0, 0], ['op', 0, 0, 0, 0]]
+</pre>
+
+<b><i>Question:</i></b>
+<ol>
+<li>why it is '[row]*3' but not 'row*3'? refer to <b>python-common-question.html</b></li>
+<li>Frankly, it is meaningless to immutable object.</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> flattening a nested sequence</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>loop over a “flattened” sequence, “expanding” each sub-sequence into a single;
+Flattening a nested sequence, or, equivalently, “walking” sequentially over all the leaves of a “tree”.
+</p>
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Resolution</h3>
+<div class="outline-text-3" id="text-6-1">
+
+
+<ul>
+<li>By default, we can arbitrarily say that every list or tuple is to be “expanded”, and <b><i>nothing else.</i></b>
+Then, a recursive generator offers the simplest solution:</li>
+<li>The key is : take an argument that’s a predicate to tell us what items we are to expand.</li>
+<li>Strings are iterable, but almost invariably applications want to treat them as scalars, not as subsequences.</li>
+</ul>
+
+<pre class="example">def list_or_tuple(x):
+    return isinstance(x, (list, tuple))
+def flatten(sequence, to_expand=list_or_tuple):
+    for item in sequence:
+        if to_expand(item):
+            for subitem in flatten(item, to_expand):
+                yield subitem
+        else:
+            yield item
+
+if __name__ == "__main__":
+    for x in flatten([1, 2, [3, [ ], 4, [5, 6], 7, [8,], ], 9]):
+        print x
+
+#emit: 1,2,3,4,5,6,7,8,9
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Summary</h3>
+<div class="outline-text-3" id="text-6-2">
+
+<p>The only problem with this common task is that, in the general case, determining
+what is to be “expanded”, and what is to be yielded as a scalar.
+</p><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">identify whether object is iterable</td><td class="left">iter(obj) will raise typeError</td></tr>
+<tr><td class="left">identify whether object is string like</td><td class="left">isinstance(obj, basestring) is True</td></tr>
+</tbody>
+</table>
+
+below is an extension if you want to return a non-string argument.
+
+
+
+<pre class="example">def nonstring_iterable(obj):
+    try: iter(obj)
+    except TypeError: return False
+    else: return not isinstance(obj, basestring)
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Removing or Reordering columns in a list of row.</h2>
+<div class="outline-text-2" id="text-7">
+
+
+You have a list of lists (rows) and need to get another list of the same rows but with
+some columns removed and/or reordered.
+<p>in other words: reorder or omit some of the original columns,we should keep row unchanged just update columns.</p>
+
+<pre class="example">In [154]: listOfRows = [ [1,2,3,4], [5,6,7,8], [9,10,11,12] ]
+
+In [155]: newList = [ [row[0], row[3], row[2]] for row in listOfRows ]
+In [159]: newList = [ [row[ci] for ci in (0, 3, 2)] for row in listOfRows ] # nest a inner list comprehension loop on auxiliary sequences
+In [160]: newList
+Out[160]: [[1, 4, 3], [5, 8, 7], [9, 12, 11]]
+</pre>
+
+<p>
+Comparing the first and second approach, if you adopt the second one,you gain some potential generality, because you can
+choose to give a name to the auxiliary sequence of indices,pass it as an argument to a function.
+</p>
+
+
+<pre class="example">def pick_and_reorder_columns(listofRows, column_indexes):
+    return [ [row[ci] for ci in column_indexes] for row in listofRows ]
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Transposing a list</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>This recipe shows a concise yet clear way to turn rows into columns, 
+</p>
+
+
+
+<pre class="example">In [5]: arr = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+
+In [7]: print [[r[col] for r in arr] for col in range(len(arr[0]))]
+[[1, 4, 7, 10], [2, 5, 8, 11], [3, 6, 9, 12]]
+
+In [15]: print map(list, zip(*arr))              # built-in function.
+[[1, 4, 7, 10], [2, 5, 8, 11], [3, 6, 9, 12]]
+</pre>
+
+
+</div>
+
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> slight improvement in performance</h3>
+<div class="outline-text-3" id="text-8-1">
+
+<p>we don’t use zip’s result as a list directly,(because izip does not materialize its result as a list in 
+memory, but rather yields it one item at a time): 
+</p>
+
+
+<pre class="example">In [160]: newList
+Out[160]: [[1, 4, 3], [5, 8, 7], [9, 12, 11]]
+In [161]: import itertools
+In [162]: test=itertools.izip(*newList)
+In [163]: test
+Out[163]: &lt;itertools.izip at 0x2e4d368&gt;
+In [164]: next(test)
+Out[164]: (1, 5, 9)
+
+import itertools
+print map(list, itertools.izip(*arr))
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Getting a value from dictionary</h2>
+<div class="outline-text-2" id="text-9">
+
+<p>You need to obtain a value from a dictionary, without having to handle an exception
+if the key you seek is not in the dictionary.
+</p>
+
+
+<pre class="example">print d.get('key', 'not found')    # just reads d and never changes it
+print d.pop('key', 'not found')    # does a get-and-remove
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Adding an entry to an dictionary</h2>
+<div class="outline-text-2" id="text-10">
+
+<p>Working with a dictionary d, you need to use the entry d[k] when it’s already
+present, or add a new value as d[k] when k isn’t yet a key in d.
+if k is not a key in the dictionary, the setdefault method assigns
+d[k]=v as a side effect,
+</p>
+
+
+<pre class="example">In [17]: d={'a':1,'b':2}
+
+In [18]: d
+Out[18]: {'a': 1, 'b': 2}
+
+In [19]: d.setdefault('c',[]).append(3)
+
+In [20]: d
+Out[20]: {'a': 1, 'b': 2, 'c': [3]}
+</pre>
+
+<p>
+This code is equivalent to more verbose approaches such as:
+</p>
+
+
+<pre class="example">def addword(theIndex, word, pagenumber):
+    try:
+        theIndex[word].append(pagenumber)
+    except KeyError:
+        theIndex[word] = [pagenumber]
+</pre>
+
+
+</div>
+
+<div id="outline-container-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Discussion</h3>
+<div class="outline-text-3" id="text-10-1">
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">format</th><th scope="col" class="left">feature</th><th scope="col" class="left">comment</th></tr>
+</thead>
+<tbody>
+<tr><td class="left">d.get(k,v)</td><td class="left">if k not a key, return v</td><td class="left"></td></tr>
+<tr><td class="left">d.setdefault(k,v)</td><td class="left">if k not a key, set d[k]=v</td><td class="left">get-like function.</td></tr>
+<tr><td class="left">d.setdefault(k,v).append(v2)</td><td class="left">more useful when value is list</td><td class="left">meaningless when value is immutable</td></tr>
+</tbody>
+</table>
+
+The third format, when the value is immutable,you must rebind the dictionary entry at theIndex[word] anyway.
+in case it have a original value, we'd better use get() method instead of setdefault()
+
+
+
+<pre class="example">def addword(theIndex, word, pagenumber):
+    theIndex[word] = theIndex.get(word, [ ]) + [pagenumber]
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Building a dictionary without excessive quoting</h2>
+<div class="outline-text-2" id="text-11">
+
+<p>you can avoid quoting them by calling dict with named-argument syntax:
+</p>
+
+
+<pre class="example">data = dict(red=1, green=2, blue=3)       # it is neater than below format. with named-argument syntax
+data = {'red': 1, 'green': 2, 'blue': 3}  # dictionary-display syntax, standard format with colons and braces.
+</pre>
+
+by calling dict, you can avoid having to quote keys, when the keys are
+literal strings that happen to be <b>syntactically valid</b> for use as Python identifiers.
+<p>You cannot use this approach for keys such as the literal strings '12ba' or 'for':</p>
+<ul>
+<li>'12ba' starts with a digit</li>
+<li>'for' happens to be a Python keyword, not an identifier</li>
+</ul>
+
+</div>
+
+<div id="outline-container-11-1" class="outline-3">
+<h3 id="sec-11-1"><span class="section-number-3">11.1</span> Discussion</h3>
+<div class="outline-text-3" id="text-11-1">
+
+
+<ol>
+<li>dict(d) give another possibility. it return a copy of dict, just like d.copy()</li>
+<li>mix up with zip() function,where the_keys is a sequence of keys and the_values a “parallel” sequence of corre-
+sponding values.</li>
+</ol>
+
+<pre class="example">In [30]: d = dict(zip(('a','b','c'),(1,2,3)))
+
+In [31]: d
+Out[31]: {'a': 1, 'b': 2, 'c': 3}
+
+In [32]: d = dict(zip(['a','b','c'],[1,2,3]))
+
+In [33]: d
+Out[33]: {'a': 1, 'b': 2, 'c': 3}
+
+d = dict(itertools.izip(the_keys, the_values)) # is recommended,itertools.izip yields only one pair at a time. more fast.
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-11-2" class="outline-3">
+<h3 id="sec-11-2"><span class="section-number-3">11.2</span> Conclusion</h3>
+<div class="outline-text-3" id="text-11-2">
+
+<p>So far we have 3 ways to create a dict. most of all pay attention to the third one, mixed up with function zip. 
+we should decompose the procedure into two steps.
+</p>
+
+
+<pre class="example">In [9]: test1=[1,2]
+
+In [10]: test2=[3,4]
+
+In [11]: d=dict(zip(test1,test2))
+
+In [12]: d
+Out[12]: {1: 3, 2: 4}
+
+In [13]: zip(test1,test2)
+Out[13]: [(1, 3), (2, 4)]
+
+In [14]: dict((1,2))    # according to the result of zip(),I think this format will be ok, but it return error..
+TypeError: cannot convert dictionary update sequence element #0 to a sequence
+
+In [16]: dict([(1,2)])  # it should be like this.a list of tuple..
+Out[16]: {1: 2}
+# then compare the success and fault, you will find the success will used more general, because we always want to 
+# update a list of something, not just only this tuple.you should realize (1,2) is a tuple.then you could found  
+# the next() of izip() funtion, it is a tuple. so as my predict, for the "discussion part" every time after next(),
+# the value should be changed to list first.
+In [17]: dict(((1,2)))
+
+In [32]: dict([(1,2),(3,4),(5,6)]) # covert from a list of tuple is more useful. so you give a tuple is not correct.
+Out[32]: {1: 2, 3: 4, 5: 6}
+TypeError: cannot convert dictionary update sequence element #0 to a sequence
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Building a dict from a list of alternating keys and values</h2>
+<div class="outline-text-2" id="text-12">
+
+<p>First you should know what is "alternating keys and values", it is the task of getting a sequence of pairs from a
+flat sequence
+</p>
+
+
+<pre class="example">In [19]: def dictFromList(keysAndValues):
+   ....:     return dict(zip(keysAndValues[::2], keysAndValues[1::2]))
+   ....: 
+
+In [21]: x=[1,2,3,4]
+
+In [22]: dictFromList(x)
+Out[22]: {1: 2, 3: 4}
+</pre>
+
+<p>
+if keysAndValues is a long sequence, all of this list construction activity can cost some performance.
+</p>
+
+
+<pre class="example">def pairwise(iterable):
+    itnext = iter(iterable).next
+    while True:
+        yield itnext(), itnext()
+def dictFromSequence(seq):
+    #  print pairwise(seq).next()
+    return dict(pairwise(seq))
+</pre>
+
+
+</div>
+
+<div id="outline-container-12-1" class="outline-3">
+<h3 id="sec-12-1"><span class="section-number-3">12.1</span> dict(zip(seq,seq))</h3>
+<div class="outline-text-3" id="text-12-1">
+
+
+Making a conclusion from the last 2 part, dict also could covert a <b>tuple generator</b> or 
+<b>list of tuple</b> to a dictionary.
+<p>The generator part of this part, you would find the value is a tuple, just like the description in the last part's 
+conclusion,so so as my predict, for the "discussion part" every time after next(), the value should be changed to 
+list first.</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> Extracting a subset from a dictionary</h2>
+<div class="outline-text-2" id="text-13">
+
+<p>Giving you a set of keys then got the corresponding pairs.
+</p>
+
+
+<pre class="example">def sub_dict(somedict, somekeys, default=None):            # leaving the original dict intact
+    return dict([ (k, somedict.get(k, default)) for k in somekeys ])
+
+def sub_dict_remove(somedict, somekeys, default=None):     # remove matched item the original dict
+    return dict([ (k, somedict.pop(k, default)) for k in somekeys ])
+
+In [41]: d = {'a': 5, 'b': 6, 'c': 7}
+
+In [42]: print sub_dict(d, 'ab'), d
+{'a': 5, 'b': 6} {'a': 5, 'c': 7, 'b': 6}
+
+In [43]: print sub_dict_remove(d, 'ab'), d
+{'a': 5, 'b': 6} {'c': 7}
+</pre>
+
+<p>
+you can use generator expressions, instead of list comprehensions, Just change the
+syntax of the calls to dict, from dict([. . .]) to dict(. . .)
+</p></div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> Inverting a dictionary</h2>
+<div class="outline-text-2" id="text-14">
+
+<p>mapping each value to its key.
+</p>
+
+
+<pre class="example">def invert_dict(d):
+    return dict([ (v, k) for k, v in d.iteritems( ) ])
+
+# for large dictionary.it's faster to use generator izip
+from itertools import izip
+def invert_dict_fast(d):
+    return dict(izip(d.itervalues( ), d.iterkeys( )))
+
+# emit:
+In [2]: d=dict(red=2,yellow=3,blue=4)
+
+In [3]: invert_dict(d)
+Out[3]: {2: 'red', 3: 'yellow', 4: 'blue'}
+
+In [4]: d=dict(red=2,yellow=3,blue=3)
+
+In [5]: invert_dict(d)      # the duplicate will be omitted.
+Out[5]: {2: 'red', 3: 'yellow'}
+</pre>
+
+<p>
+If the value in dict d is not unique.the functions shown in this recipe still construct, 
+even in such cases, a “pseudo-inverse”. so x is the true inverse of d if and only if 
+len(x)==len(d).
+</p></div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> Associating multiple value with each key in a dict</h2>
+<div class="outline-text-2" id="text-15">
+
+
+<ol>
+<li>one-to-one mapping to one-to-multiple mapping.</li>
+<li>Each approach relies on the <b>setdefault</b> method of a dictionary,</li>
+<li><b>d1[key].remove(value)</b> to remove the value. </li>
+</ol>
+
+<pre class="example"># value is a list.
+In [11]: d1 = { }
+In [12]: d1 .setdefault('a', [ ]).append(2)
+In [13]: d1
+Out[13]: {'a': [2]}
+In [17]: d1 .setdefault('a', [ ]).append(3)
+In [18]: d1
+Out[18]: {'a': [2, 3]}
+In [20]: d1['a'].remove(2)
+In [21]: d1
+Out[21]: {'a': [3]}
+# value is a dict. no remove method .. because dict don't have remove method.
+In [9]: d2.setdefault('d', { })[1] = 1
+In [10]: d2
+Out[10]: {'d': {1: 1}}
+In [26]: d2.setdefault('d', { })[2] = 2
+In [27]: d2
+Out[27]: {'d': {1: 1, 2: 2}}
+# value is a set 
+In [14]: d3 = { }
+In [15]: d3.setdefault('c', set( )).add(4)
+In [16]: d3
+Out[16]: {'c': set([4])}
+In [22]: d3.setdefault('c', set( )).add(5)
+In [23]: d3
+Out[23]: {'c': set([4, 5])}
+In [24]: d3['c'].remove(4)
+In [25]: d3
+Out[25]: {'c': set([5])}
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> Using dict to dispatching method or function</h2>
+<div class="outline-text-2" id="text-16">
+
+<p> In Python, dictionaries, and the fact that functions are first-class objects 
+(in particular, functions can be values in a dictionary)
+</p>
+
+
+<pre class="example">tokenDict = {"cat": deal_with_a_cat} # set a function value to a key.
+cat()   # invoke this function.
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> Finding Unions and intersections of dict</h2>
+<div class="outline-text-2" id="text-17">
+
+<p>Given two dictionaries,
+<ul>
+<li>Intersection: you need to find the set of keys that are in both dictionaries</li>
+<li>Union: the set of keys that are in either dictionary</li>
+</ul>
+You can use the type of dict or set. However, it’s best to use type set instead of 
+representing sets by dictionaries.because we just care about the keys,not the corresponding
+values.
+Method 1: using dict.
+</p>
+
+
+<pre class="example"># build the dict by calls to dict.fromkeys()
+In [23]: d=dict(a=3,b=4)
+In [24]: d
+Out[24]: {'a': 3, 'b': 4}
+In [25]: a=dict.fromkeys(d)    # update the value to none. we don't care value.
+In [26]: a
+Out[26]: {'a': None, 'b': None}
+In [27]: e=dict(a=8,c=9)
+In [28]: b=dict.fromkeys(e)
+In [29]: dict(a,**b)          # get the union through dict.
+Out[29]: {'a': None, 'b': None, 'c': None}
+
+if len(a) &lt; len(b):           # get inter through dict. in for is the short list,for speed.  
+    inter = dict.fromkeys([x for x in a if x in b])
+else:
+    inter = dict.fromkeys([x for x in b if x in a])
+</pre>
+
+<p>
+Method 2: using set. first extract the key to a set,because we just care key.
+</p>
+
+
+<pre class="example">In [14]: d
+Out[14]: {'a': 3, 'b': 4}
+
+In [15]: set(d)
+Out[15]: set(['a', 'b'])
+
+union = a | b
+inter = a &amp; b
+union = a.union(b)  # don’t need to turn both dicts into sets: just one of them(a)
+inter = a.intersection(b)
+a.symmetric_difference(b)  # in either a or b but not both a^b
+</pre>
+
+
+</div>
+
+<div id="outline-container-17-1" class="outline-3">
+<h3 id="sec-17-1"><span class="section-number-3">17.1</span> Discussion</h3>
+<div class="outline-text-3" id="text-17-1">
+
+
+<ul>
+<li>Dict phones  : maps names to phone number</li>
+<li>Dict address : maps names to address </li>
+</ul>
+print all names for which you know both address and phone number 
+
+<pre class="example">for name in set(phones) &amp; set(addresses):
+    print name, phones[name], addresses[name]
+
+for name in set(phones).intersection(addresses):   # address no need to change to set.
+    print name, phones[name], addresses[name]
+</pre>
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2013-01-11T00:32+0900</p>
+<p class="author">Author: ryu</p>
+<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.2 with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

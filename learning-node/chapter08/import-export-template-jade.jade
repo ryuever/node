@@ -1,0 +1,21 @@
+// layout.jade
+doctype 5              // use html5 doctype
+html(lang="en")
+  head
+    title #{title}
+      meta(charset="utf-8")
+  body
+    block content
+
+// layout2.jade
+doctype 5
+html(lang="en")
+  head
+    include header       // include 路径是相对的，这里隐含这header.jade跟layout.jade在同一个路径
+  body
+    block content
+
+// header.jade
+head
+  title #{title}
+    meta(charset="utf-8")

@@ -1,0 +1,9 @@
+InfoKey: Creator
+InfoValue: 
+InfoKey: Title
+InfoValue: 
+InfoKey: Producer
+InfoValue: Qt 4.8.3 (C) 2011 Nokia Corporation and/or its subsidiary(-ies)
+InfoKey: CreationDate
+InfoValue: D:20130218032718
+NumberOfPages: 9

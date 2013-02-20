@@ -1,0 +1,15 @@
+I The loop to print out the numbers is used to delay the application, similar to what
+could happen if you performed a computationally intensive process and then blocked
+until the process was finished. The setTimeout function is another asynchronous func-
+tion, which in turn invokes a second asynchronous function: readFile. The application
+combines both asynchronous and synchronous processes.
+Create a text file named main.txt, containing any text you want. Running the applica-
+tion and accessing the page from Chrome with a query string of file=main generates
+the following console output:
+Server running at 8124/
+opening main.txt
+opening undefined.txt
+The first two lines are expected. The first is the result of running console.log at the end
+of the application, and the second is a printout of the file being opened. But what’s
+undefined.txt in the third line?
+When processing a web request from a br
