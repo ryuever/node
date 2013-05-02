@@ -31,7 +31,7 @@ module.exports.processFile = function(username, email, path, filename) {
 		    console.log('sending email');
 		    var server = emailjs.server.connect({
 			user : 'liuyouchao111@gmail.com',
-			password : 'Zdkpg163qyg',
+			password : '********',
 			host : 'smtp.gmail.com',
 			port : 587,
 			tls : true
